@@ -212,6 +212,7 @@ int main()
 	//cout << Pop(newList) << endl;
 	PrintListIteratively(newList);
 	InsertSort(newList);
+	PrintListIteratively(newList);
 	/*InsertNth(newList, 2, 10);
 
 	cout << Length(newList) << endl;
