@@ -101,13 +101,79 @@ void DeleteListRecursively(struct node*& list)
 	list = NULL;
 }
 
+int Pop(struct node*& head)
+{
+	int headdata ;
+	if(head == NULL)
+		return -100;
+	else
+	{
+		struct node* current = head;
+		headdata = head->data;
+		head = head->next;
+		free(current);
+	}
+	return headdata;
+}	
+
+void InsertNth(struct node*& head, int position, int data)
+{
+	struct node* newNode = CreateNewNode(data);
+	if(head == NULL)
+		return;
+	if(position < 0)
+		return;
+	else
+	{
+		struct node* current = head;
+		int i = 0; 
+		while(i < position && current != NULL)
+		{
+			current = current->next;
+			i++;
+		}
+		newNode->next = current->next;
+		current->next = newNode;
+	}
+}
+
+void PrintListIteratively(struct node* list)
+{
+	if(list == NULL)
+		return;
+	else
+	{
+		struct node * current = list;
+		while(current != NULL)
+		{
+			cout << current->data << endl;
+			current = current->next;
+		}
+	}
+}
+
+void PrintListRecursively(struct node* list)
+{
+	if(list == NULL)
+		return;
+	else
+	{
+		PrintListRecursively(list->next);
+		cout << list->data << endl;
+	}
+}
+
 int main()
 {	
 	struct node* newList  = CreateRandomList(10);
 	cout << Length(newList) << endl;
 	int nthNode = GetNth(newList, 5);
 	cout << nthNode << endl;
-	DeleteListRecursively(newList);
+	// DeleteListRecursively(newList);
+	//cout << Pop(newList) << endl;
+	InsertNth(newList, 2, 10);
+	cout << Length(newList) << endl;
+	cout << GetNth(newList,3) << endl;
 	return 0;
 }
 
