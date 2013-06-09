@@ -170,18 +170,21 @@ void PrintListRecursively(struct node* list)
 // Given a list that is sorted in increasing order, insert a new node which is in its correct place in the sorted list
 void SortedInsert(struct node*& headRef, struct node* newNode)
 {
-	if(headRef == NULL)
-		return;
-	else
-	{
 		struct node* current = headRef;
-		while(current->next != NULL && newNode->data > current->next->data)
+		if(headRef == NULL)
 		{
-			current = current->next;
+			newNode->next = headRef;
+			headRef = newNode;
 		}
-		newNode->next = current->next;
-		current->next = newNode;
-	}
+		if(current != NULL)
+		{
+			while(current->next != NULL && newNode->data > current->next->data)
+			{
+				current = current->next;
+			}
+			newNode->next = current->next;
+			current->next = newNode;
+		}
 }
 
 // Make use of the Sorted Insert to create a Sorted List
@@ -196,8 +199,7 @@ void InsertSort(struct node*& headRef)
 			SortedInsert(result, current);
 			current = next;
 		}
-		headRef = result;
-	
+		headRef = result;	
 }
 
 int main()
