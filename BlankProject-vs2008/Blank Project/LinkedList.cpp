@@ -74,12 +74,40 @@ int GetNth(struct node* list, int N)
 	return current->data;
 }
 
+void DeleteListIteratively(struct node*& list)
+{
+	if(list == NULL)
+		return;
+	else
+	{
+		struct node * current = list;
+		struct node* next = current;
+		while(current != NULL)
+		{
+			next = current->next;
+			free(current);
+			current = next;
+		}
+		list = NULL;
+	}
+}
+
+void DeleteListRecursively(struct node*& list)
+{
+	if(list == NULL)
+		return;
+	DeleteListRecursively(list->next);
+	free(list);
+	list = NULL;
+}
+
 int main()
 {	
 	struct node* newList  = CreateRandomList(10);
 	cout << Length(newList) << endl;
 	int nthNode = GetNth(newList, 5);
 	cout << nthNode << endl;
+	DeleteListRecursively(newList);
 	return 0;
 }
 
