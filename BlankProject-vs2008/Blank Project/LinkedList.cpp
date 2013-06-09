@@ -123,6 +123,8 @@ void InsertNth(struct node*& head, int position, int data)
 		return;
 	if(position < 0)
 		return;
+	if(position == 0)
+		push(head, data);
 	else
 	{
 		struct node* current = head;
@@ -144,6 +146,7 @@ void PrintListIteratively(struct node* list)
 	else
 	{
 		struct node * current = list;
+		cout << "Printing List Iteratively " << endl;
 		while(current != NULL)
 		{
 			cout << current->data << endl;
@@ -154,12 +157,41 @@ void PrintListIteratively(struct node* list)
 
 void PrintListRecursively(struct node* list)
 {
+	cout << "Printing List Recursively " << endl;
 	if(list == NULL)
 		return;
 	else
 	{
 		PrintListRecursively(list->next);
 		cout << list->data << endl;
+	}
+}
+
+// Given a list that is sorted in increasing order, insert a new node which is in its correct place in the sorted list
+void SortedInsert(struct node*& headRef, struct node* newNode)
+{
+	if(headRef == NULL)
+		return;
+	else
+	{
+		struct node* current = headRef;
+		while(current != NULL && newNode->data < current->data)
+		{
+			current = current->next;
+		}
+		newNode->next = current->next;
+		current->next = newNode;
+	}
+}
+
+// Make use of the Sorted Insert to create a Sorted List
+void InsertSort(struct node*& headRef)
+{
+	if(headRef == NULL)
+		return;
+	else
+	{
+		
 	}
 }
 
@@ -171,9 +203,11 @@ int main()
 	cout << nthNode << endl;
 	// DeleteListRecursively(newList);
 	//cout << Pop(newList) << endl;
-	InsertNth(newList, 2, 10);
+	PrintListIteratively(newList);
+	/*InsertNth(newList, 2, 10);
+
 	cout << Length(newList) << endl;
-	cout << GetNth(newList,3) << endl;
+	cout << GetNth(newList,3) << endl;*/
 	return 0;
 }
 
