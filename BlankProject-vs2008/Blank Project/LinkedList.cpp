@@ -187,12 +187,17 @@ void SortedInsert(struct node*& headRef, struct node* newNode)
 // Make use of the Sorted Insert to create a Sorted List
 void InsertSort(struct node*& headRef)
 {
-	if(headRef == NULL)
-		return;
-	else
-	{
-		
-	}
+	struct node* result = NULL;
+	struct node* current = headRef;
+	struct node* next; 
+		while(current != NULL)
+		{
+			next = current->next;
+			SortedInsert(result, current);
+			current = next;
+		}
+		headRef = result;
+	
 }
 
 int main()
@@ -204,6 +209,7 @@ int main()
 	// DeleteListRecursively(newList);
 	//cout << Pop(newList) << endl;
 	PrintListIteratively(newList);
+	InsertSort(newList);
 	/*InsertNth(newList, 2, 10);
 
 	cout << Length(newList) << endl;
