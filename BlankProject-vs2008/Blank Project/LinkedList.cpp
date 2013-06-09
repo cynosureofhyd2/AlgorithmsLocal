@@ -175,7 +175,7 @@ void SortedInsert(struct node*& headRef, struct node* newNode)
 	else
 	{
 		struct node* current = headRef;
-		while(current != NULL && newNode->data < current->data)
+		while(current->next != NULL && newNode->data > current->next->data)
 		{
 			current = current->next;
 		}
