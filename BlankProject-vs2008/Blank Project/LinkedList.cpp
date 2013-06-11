@@ -222,7 +222,31 @@ void Append(struct node*& aref, struct node*& bref)
 
 void FrontBackSplit(struct node* source, struct node*& front, struct node*& back)
 {
-	
+	if(source == NULL)
+		return;
+	else
+	{
+		struct node* slow = source;
+		struct node* fast = source;
+		//front = CreateNewNode(slow->data);
+		while(fast!= NULL && fast->next != NULL)
+		{
+			push(front, slow->data);
+			slow = slow->next;
+			fast = fast->next->next;
+		}
+		if(fast->next == NULL)
+		{
+			push(front, slow->data);
+			slow = slow->next;
+		}
+		
+		while(slow != NULL)
+		{
+			push(back, slow->data);
+			slow = slow->next;
+		}
+	}
 }
 
 int main()
@@ -240,10 +264,14 @@ int main()
 	
 	cout << Length(newList) << endl;
 	cout << GetNth(newList,3) << endl;*/
-	struct node* anotherList = CreateRandomList(2);
+	struct node* anotherList = CreateRandomList(3);
 	Append(newList, anotherList);
 	cout << "Final Length " << endl;
 	cout << Length(newList) << endl;
+	struct node* aRef = NULL, *bRef = NULL;
+	FrontBackSplit(newList, aRef, bRef);
+	int left = Length(aRef);
+	int right = Length(bRef);
 	return 0;
 }
 
