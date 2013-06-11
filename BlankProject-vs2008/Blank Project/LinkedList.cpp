@@ -259,15 +259,36 @@ void RemoveDuplicates(struct node*& head)
 		if(current->next != NULL && current->data == current->next->data)
 		{
 			temp = current;
-			while(temp->data == temp->next->data)
+			if(temp->next != NULL)
 			{
-				temp = temp->next;
+				while(temp->data == temp->next->data)
+				{
+					temp = temp->next;
+				}
 			}
 			current->next = temp->next;
 		}
-
 		current = current->next;
 	}
+}
+/*This Function will take the first node from the second list and append it to beginning of first list*/
+void MoveNode(struct node*& dest, struct node*& source)
+{
+	if(dest == NULL)
+		return;
+	struct node* nextsource = NULL;
+	if(source != NULL)
+	{
+		push(dest, source->data);
+		nextsource = source->next;
+		free(source);
+		source = nextsource;
+	}
+}
+
+void AlternatingSplit(struct node* source, struct node*& aref, struct node*& bref)
+{
+	
 }
 
 int main()
@@ -287,6 +308,7 @@ int main()
 	cout << Length(newList) << endl;
 	cout << GetNth(newList,3) << endl;*/
 	struct node* anotherList = CreateRandomList(3);
+	MoveNode(newList, anotherList);
 	//Append(newList, anotherList);
 	cout << "Final Length " << endl;
 	cout << Length(newList) << endl;
