@@ -249,6 +249,27 @@ void FrontBackSplit(struct node* source, struct node*& front, struct node*& back
 	}
 }
 
+/*Takes a Sorted List and removes Duplicates from it */
+void RemoveDuplicates(struct node*& head)
+{
+	struct node* current = head;
+	struct node* temp = NULL;
+	while(current != NULL)
+	{
+		if(current->next != NULL && current->data == current->next->data)
+		{
+			temp = current;
+			while(temp->data == temp->next->data)
+			{
+				temp = temp->next;
+			}
+			current->next = temp->next;
+		}
+
+		current = current->next;
+	}
+}
+
 int main()
 {	
 	struct node* newList  = CreateRandomList(10);
@@ -260,12 +281,13 @@ int main()
 	PrintListIteratively(newList);
 	InsertSort(newList);
 	PrintListIteratively(newList);
+	RemoveDuplicates(newList);
 	/*InsertNth(newList, 2, 10);
 	
 	cout << Length(newList) << endl;
 	cout << GetNth(newList,3) << endl;*/
 	struct node* anotherList = CreateRandomList(3);
-	Append(newList, anotherList);
+	//Append(newList, anotherList);
 	cout << "Final Length " << endl;
 	cout << Length(newList) << endl;
 	struct node* aRef = NULL, *bRef = NULL;
