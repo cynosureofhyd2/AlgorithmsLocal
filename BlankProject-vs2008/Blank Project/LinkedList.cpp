@@ -202,6 +202,29 @@ void InsertSort(struct node*& headRef)
 		headRef = result;	
 }
 
+/*Takes 2 Lists a nd b and appends b onto end of a and then sets b to NULL */
+void Append(struct node*& aref, struct node*& bref)
+{
+	if(aref == NULL || bref == NULL)
+		return;
+	else
+	{
+		struct node* current = aref;
+		while(current->next != NULL)
+		{
+			current = current->next;
+		}
+		current->next = bref;
+		bref = NULL;
+	}
+}
+
+
+void FrontBackSplit(struct node* source, struct node*& front, struct node*& back)
+{
+	
+}
+
 int main()
 {	
 	struct node* newList  = CreateRandomList(10);
@@ -214,9 +237,13 @@ int main()
 	InsertSort(newList);
 	PrintListIteratively(newList);
 	/*InsertNth(newList, 2, 10);
-
+	
 	cout << Length(newList) << endl;
 	cout << GetNth(newList,3) << endl;*/
+	struct node* anotherList = CreateRandomList(2);
+	Append(newList, anotherList);
+	cout << "Final Length " << endl;
+	cout << Length(newList) << endl;
 	return 0;
 }
 
