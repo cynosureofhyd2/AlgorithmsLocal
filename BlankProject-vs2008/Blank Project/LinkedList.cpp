@@ -272,23 +272,36 @@ void RemoveDuplicates(struct node*& head)
 	}
 }
 /*This Function will take the first node from the second list and append it to beginning of first list*/
-void MoveNode(struct node*& dest, struct node*& source)
+void MoveNode(struct node*& dest, struct node*& source, int n)
 {
-	if(dest == NULL)
+	if(source == NULL)
 		return;
-	struct node* nextsource = NULL;
-	if(source != NULL)
+	else
 	{
-		push(dest, source->data);
-		nextsource = source->next;
-		free(source);
-		source = nextsource;
+		struct node* current = source;
+		struct node* next = NULL;
+		if(source != NULL)
+		{
+			next = source->next;
+			struct node* newNode = CreateNewNode(source->data);
+			newNode->next = dest;
+			dest = newNode;
+			free(source);
+			source = next;
+		}
 	}
 }
 
 void AlternatingSplit(struct node* source, struct node*& aref, struct node*& bref)
 {
-	
+	struct node* current = source;
+	struct node* next = NULL;
+	while(current != NULL)
+	{
+		MoveNode(aref, current, Length(current));
+		if(current != NULL)
+			MoveNode(bref, current, Length(current));
+	}
 }
 
 int main()
@@ -302,20 +315,21 @@ int main()
 	PrintListIteratively(newList);
 	InsertSort(newList);
 	PrintListIteratively(newList);
-	RemoveDuplicates(newList);
+	//RemoveDuplicates(newList);
 	/*InsertNth(newList, 2, 10);
 	
 	cout << Length(newList) << endl;
 	cout << GetNth(newList,3) << endl;*/
 	struct node* anotherList = CreateRandomList(3);
-	MoveNode(newList, anotherList);
+	MoveNode(newList, anotherList, Length(anotherList));
 	//Append(newList, anotherList);
 	cout << "Final Length " << endl;
 	cout << Length(newList) << endl;
 	struct node* aRef = NULL, *bRef = NULL;
-	FrontBackSplit(newList, aRef, bRef);
+	/*FrontBackSplit(newList, aRef, bRef);
 	int left = Length(aRef);
 	int right = Length(bRef);
+	*/AlternatingSplit(newList, aRef, bRef);
 	return 0;
 }
 
