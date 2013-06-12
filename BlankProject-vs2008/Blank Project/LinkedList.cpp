@@ -57,7 +57,7 @@ static int Length(struct node*& head)
 int GetNth(struct node* list, int N)
 {
 	struct node* current = list;
-
+	int result = -100;
 	int counter = 0;
 	if(list == NULL)
 		return -100;
@@ -71,7 +71,14 @@ int GetNth(struct node* list, int N)
 			counter++;
 		}
 	}
-	return current->data;
+	if(counter == N -1)
+	{
+		return current->data;
+	}
+	else
+	{
+		return result;
+	}
 }
 
 void DeleteListIteratively(struct node*& list)
@@ -304,32 +311,71 @@ void AlternatingSplit(struct node* source, struct node*& aref, struct node*& bre
 	}
 }
 
+void ShuffleMerge(struct node* a, struct node* b)
+{
+	struct node* currenta = a;
+	struct node* currentb = b;
+	struct node* result = NULL;
+	while(currenta != NULL && currentb != NULL)
+	{
+		MoveNode(result, currenta, Length(currenta));
+		MoveNode(result, currentb, Length(currentb));
+	}
+	if(currenta == NULL)
+	{
+		while(currentb != NULL)
+		{
+			MoveNode(result, currentb, Length(currentb));
+			if(currentb->next == NULL)
+			{
+				MoveNode(result, currentb, Length(currentb));
+				break;
+			}
+			currentb = currentb->next;
+		}
+	}
+	if(currentb == NULL)
+	{
+		while(currenta != NULL)
+		{
+			MoveNode(result, currenta, Length(currenta));
+			if(currenta->next == NULL)
+			{
+				MoveNode(result, currenta, Length(currenta));
+				break;
+			}
+			currenta = currenta->next;
+		}
+	}
+}
+
 int main()
 {	
-	struct node* newList  = CreateRandomList(10);
+	struct node* newList  = CreateRandomList(5);
 	cout << Length(newList) << endl;
 	int nthNode = GetNth(newList, 5);
 	cout << nthNode << endl;
 	// DeleteListRecursively(newList);
-	//cout << Pop(newList) << endl;
-	PrintListIteratively(newList);
-	InsertSort(newList);
-	PrintListIteratively(newList);
-	//RemoveDuplicates(newList);
-	/*InsertNth(newList, 2, 10);
-	
-	cout << Length(newList) << endl;
-	cout << GetNth(newList,3) << endl;*/
+	////cout << Pop(newList) << endl;
+	//PrintListIteratively(newList);
+	//InsertSort(newList);
+	//PrintListIteratively(newList);
+	////RemoveDuplicates(newList);
+	///*InsertNth(newList, 2, 10);
+	//
+	//cout << Length(newList) << endl;
+	//cout << GetNth(newList,3) << endl;*/
 	struct node* anotherList = CreateRandomList(3);
-	MoveNode(newList, anotherList, Length(anotherList));
-	//Append(newList, anotherList);
-	cout << "Final Length " << endl;
-	cout << Length(newList) << endl;
-	struct node* aRef = NULL, *bRef = NULL;
-	/*FrontBackSplit(newList, aRef, bRef);
-	int left = Length(aRef);
-	int right = Length(bRef);
-	*/AlternatingSplit(newList, aRef, bRef);
+	//MoveNode(newList, anotherList, Length(anotherList));
+	////Append(newList, anotherList);
+	//cout << "Final Length " << endl;
+	//cout << Length(newList) << endl;
+	//struct node* aRef = NULL, *bRef = NULL;
+	///*FrontBackSplit(newList, aRef, bRef);
+	//int left = Length(aRef);
+	//int right = Length(bRef);
+	//*/AlternatingSplit(newList, aRef, bRef);
+	ShuffleMerge(newList, anotherList);
 	return 0;
 }
 
