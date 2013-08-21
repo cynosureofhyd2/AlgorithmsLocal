@@ -178,6 +178,7 @@ void PrintListRecursively(struct node* list)
 void SortedInsert(struct node*& headRef, struct node* newNode)
 {
 		struct node* current = headRef;
+		struct node* previous = NULL;
 		if(headRef == NULL)
 		{
 			newNode->next = headRef;
@@ -185,12 +186,20 @@ void SortedInsert(struct node*& headRef, struct node* newNode)
 		}
 		if(current != NULL)
 		{
-			while(current->next != NULL && newNode->data > current->next->data)
+			while(current != NULL && newNode->data > current->data)
 			{
+				previous = current;
 				current = current->next;
 			}
-			newNode->next = current->next;
-			current->next = newNode;
+			if(current != NULL && newNode->data <= current->data)
+			{
+				push(current, newNode->data);
+			}
+			else
+			{
+				newNode->next = current;
+				previous->next = newNode;
+			}
 		}
 }
 
@@ -349,6 +358,55 @@ void ShuffleMerge(struct node* a, struct node* b)
 	}
 }
 
+/* This Function takes two lists, each of which is sorted in increasing order and merges the two together into one list which is in increasing order */
+struct node* SortedMerge(struct node* a, struct node* b)
+{
+	struct node* currenta = a;
+	struct node* currentb = b;
+	struct node* result = NULL;
+	while(currenta != NULL && currentb != NULL)
+	{
+		if(currenta->data < currentb->data)
+		{
+			MoveNode(result, currenta, Length(currenta));
+		}
+		else if(currenta->data > currentb->data)
+			MoveNode(result, currentb, Length(currentb));
+		else if(currenta->data == currentb->data)
+		{
+			MoveNode(result, currenta, Length(currenta));
+			MoveNode(result, currentb, Length(currentb));
+		}
+	}
+	if(currenta == NULL)
+	{
+		while(currentb != NULL)
+		{
+			MoveNode(result, currentb, Length(currentb));
+			if(currentb->next == NULL)
+			{
+				MoveNode(result, currentb, Length(currentb));
+				break;
+			}
+			currentb = currentb->next;
+		}
+	}
+	if(currentb == NULL)
+	{
+		while(currenta != NULL)
+		{
+			MoveNode(result, currenta, Length(currenta));
+			if(currenta->next == NULL)
+			{
+				MoveNode(result, currenta, Length(currenta));
+				break;
+			}
+			currenta = currenta->next;
+		}
+	}
+	return result;
+}
+
 int main()
 {	
 	struct node* newList  = CreateRandomList(5);
@@ -358,7 +416,8 @@ int main()
 	// DeleteListRecursively(newList);
 	////cout << Pop(newList) << endl;
 	//PrintListIteratively(newList);
-	//InsertSort(newList);
+	InsertSort(newList);
+	RemoveDuplicates(newList);
 	//PrintListIteratively(newList);
 	////RemoveDuplicates(newList);
 	///*InsertNth(newList, 2, 10);
@@ -366,6 +425,8 @@ int main()
 	//cout << Length(newList) << endl;
 	//cout << GetNth(newList,3) << endl;*/
 	struct node* anotherList = CreateRandomList(3);
+	InsertSort(anotherList);
+	RemoveDuplicates(anotherList);
 	//MoveNode(newList, anotherList, Length(anotherList));
 	////Append(newList, anotherList);
 	//cout << "Final Length " << endl;
